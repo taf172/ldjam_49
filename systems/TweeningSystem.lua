@@ -1,4 +1,4 @@
-local secsi = require 'libs.secsi'
+local secsi = require 'secsi'
 
 local TweenManagementSystem = secsi.system{'tweens'}
 
