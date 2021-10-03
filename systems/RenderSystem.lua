@@ -47,7 +47,7 @@ function RenderSystem.update(e)
     end
     --love.graphics.circle('fill', e.x, e.y, 5)
 
-    if e.eyelids then
+    if e.eyesClosed then
         love.graphics.draw(e.eyelids, e.x - e.width/2, e.y - e.height/2, rotation, sw, sh)
     end
 
@@ -66,4 +66,15 @@ function RenderSystem.update(e)
             e.text, x + e.textX, y + e.textY, e.textWidth, 'left', rotation
         )
     end
+end
+
+local hud = {}
+hud.isHud = true
+secsi.add(hud)
+local DebugSystem = secsi.system{'isHud'}
+DebugSystem.group = 'draw'
+function DebugSystem.update(e)
+    love.graphics.setColor(1, 0, 0, 1)
+    love.graphics.print('FPS: '..love.timer.getFPS(), 25, 25)
+    love.graphics.print('Entities: '..#secsi.get(), 25, 50)
 end

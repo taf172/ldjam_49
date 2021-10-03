@@ -4,11 +4,7 @@ love.graphics.setDefaultFilter("nearest","nearest")
 love.mouse.setVisible(false)
 
 local secsi = require 'secsi'
-local Bed = require 'entities.bed'
-local Cat = require 'entities.cat'
-local Clipboard = require 'entities.clipboard'
-local Monitor = require 'entities.monitor'
-local Arm = require 'entities.arm'
+local Game = require 'entities.game'
 
 require 'systems.RenderSystem'
 require 'systems.HoverSystem'
@@ -17,16 +13,13 @@ require 'systems.ArmSystem'
 require 'systems.ButtonSystem'
 require 'systems.PatientSystem'
 require 'systems.AnimationSystem'
+require 'systems.ParticleSystem'
+require 'systems.NewPatientSystem'
+
 
 -- music: https://www.strofe.com/
 -- sound fx: 
 -- art:
-
-local bed = Bed()
-local cat = Cat()
-local clip = Clipboard()
-local monitor = Monitor()
-local arm = Arm()
 
 function love.draw()
     secsi.update(0, 'draw')

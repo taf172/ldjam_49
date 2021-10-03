@@ -3,7 +3,7 @@ local secsi = require 'secsi'
 local Monitor = secsi.entity{
     image = love.graphics.newImage('assets/monitor.png'),
     render = true,
-    layer = 2
+    layer = 1
 }
 
 local ww, wh = love.graphics.getDimensions()

@@ -15,6 +15,8 @@ function Cat:init()
     self.x = ww/2
     self.y = wh/2
     self.scale = 1/2
+    self.eyesClosed = true
+    self.tweens = {}
 end
 
 return Cat

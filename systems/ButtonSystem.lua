@@ -7,6 +7,7 @@ local ButtonSystem = secsi.system{
 
 local mouseHeld = false
 function ButtonSystem.update(e)
+    e.pressed = false
     local mx, my = love.mouse.getPosition()
     local md = love.mouse.isDown(1)
     if mx > e.x - e.width/2 and mx < e.x + e.width/2

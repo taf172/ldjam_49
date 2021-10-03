@@ -7,15 +7,18 @@ local Heart = secsi.entity{
 }
 
 local ww, wh = love.graphics.getDimensions()
-function Heart:init()
+function Heart:init(x, y)
     self.height = 64
     self.width = self.image:getWidth()*(self.height/self.image:getHeight())
-    self.x = ww/2
-    self.y = wh/2
+
     self.float = true
     self.fade = true
     self.alpha = 1
     self.tweens = {}
+    self.sway = 32
+
+    self.lifetime = 3
+    self.timer = 0
 end
 
 return Heart
