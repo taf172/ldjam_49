@@ -15,7 +15,7 @@ require 'systems.PatientSystem'
 require 'systems.AnimationSystem'
 require 'systems.ParticleSystem'
 require 'systems.NewPatientSystem'
-
+require 'systems.BookSystem'
 
 -- music: https://www.strofe.com/
 -- sound fx: 

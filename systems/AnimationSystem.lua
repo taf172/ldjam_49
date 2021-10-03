@@ -1,4 +1,5 @@
 local secsi = require 'secsi'
+local Emitter = require 'entities.emitter'
 
 local AnimationSystem = secsi.system{
     all = {'tweens'},
@@ -54,6 +55,12 @@ function AnimationSystem.update(e, dt)
             e.hop = true
             e.numHops = e.numHops + 1
         elseif not e.numHops then
+            local emitter = Emitter()
+            emitter.x = e.x + 32
+            emitter.y = e.y - e.height/2 + 64
+            emitter.lifetime = 1
+            emitter.particle = 'heart'
+            emitter.rate = 0.5
             e.numHops = 0
         end
         --]]
@@ -74,8 +81,20 @@ function AnimationSystem.update(e, dt)
     end
 
     if e.walkAway then
-        e.tweens.x = {-e.width/2, 1, 'linear'}
-        e.walkAway = false
+        local stepTime = 0.125
+        if not e.walkAwayTimer then
+            e.tweens.x = {-e.width/2, 1, 'linear'}
+            e.walkAwayTimer = 0
+            e.step = 10
+        elseif e.walkAwayTimer >= stepTime then
+            e.walkAwayTimer = 0
+            e.step = e.step*-1
+            e.rotation = math.rad(e.step)
+        elseif e.walkAwayTimer then
+            e.walkAwayTimer = e.walkAwayTimer + dt
+        end
+
+        -- e.walkAway = false
         -- e.flip = not e.flip
     end
 

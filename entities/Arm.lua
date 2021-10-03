@@ -3,7 +3,7 @@ local secsi = require 'secsi'
 local Arm = secsi.entity{
     image = love.graphics.newImage('assets/arm.png'),
     render = true,
-    layer = 3,
+    layer = 10,
     arm = true,
 }
 

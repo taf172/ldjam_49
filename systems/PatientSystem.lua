@@ -16,10 +16,8 @@ function PatientSystem.update(e, dt)
 
     if cureButton.pressed and not e.cured then
         e.cured = true
-    end
-
-    if e.cured then
         e.wakeUp = true
+        e.cureButtond = true
         e.blinking = true
     end
 
@@ -42,5 +40,7 @@ function PatientSystem.update(e, dt)
 
     if e.x <= -e.width/2 then
         e.gone = true
+        e:remove()
     end
+
 end
