@@ -3,6 +3,13 @@ local secsi = require 'secsi'
 local BookSystem = secsi.system{'openImage', 'closedImage'}
 
 local ww, wh = love.graphics.getDimensions()
+local closeSound = love.audio.newSource('assets/sounds/bookclose.wav', 'static')
+closeSound:setVolume(0.25)
+local openSound = love.audio.newSource('assets/sounds/bookopen.wav', 'static')
+openSound:setVolume(0.25)
+local flipSound = love.audio.newSource('assets/sounds/pageflip.wav', 'static')
+flipSound:setVolume(0.5)
+
 function BookSystem.update(e)
     
     if  not e.open and e.swap then
@@ -33,17 +40,23 @@ function BookSystem.update(e)
   
         if mx > e.x and e.onPage + 2 <= #e.pages - 1 then
             e.onPage = e.onPage + 2
+            flipSound:stop()
+            flipSound:play()
         end
         if mx <= e.x and e.onPage > 1 then
             e.onPage = e.onPage - 2
+            flipSound:stop()
+            flipSound:play()
         end
     end
     
     if not e.open and e.pressed then
+        openSound:play()
         e.open = true
         e.swap = true
     end
     if e.open and e.pressedOff then
+        closeSound:play()
         e.open = false
         e.swap = true
     end

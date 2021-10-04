@@ -54,13 +54,44 @@ end
 local DropSystem = secsi.system{
     any = {'edible'}
 }
+local gulpSound = love.audio.newSource('assets/sounds/gulp.wav', 'static')
+gulpSound:setVolume(0.5)
+
 function DropSystem.update(e)
     if e.edible and e.outOfDispenser and not e.dragging then
         if onTop(e, Game.currentPatient) then
+            gulpSound:play()
             Game.currentPatient.eatPill = e
             e:remove()
         end
     end
+end
+
+local PatSystem = secsi.system{'pattable', 'bellyPatCount'}
+
+local bapImage = love.graphics.newImage('assets/bap.png')
+local bapSound = love.audio.newSource('assets/sounds/bap.wav', 'static')
+function PatSystem.update(e)
+    local mx, my = love.mouse.getPosition()
+
+    if mx > e.x - e.width/6 and mx < e.x + e.width/2
+    and my > e.y - e.height/6 and my < e.y + e.height/2 
+    and love.mouse.isDown(1) and not mouse.held then
+        local bap = {
+            image = bapImage,
+            width = 64, height = 64,
+            layer = 9,
+            x = mx, y = my,
+            render = true,
+            lifetime = 0.125, timer = 0
+
+        }
+        secsi.add(bap)
+        bapSound:play()
+        e.bellyPatCount = e.bellyPatCount + 1
+
+    end
+
 end
 
 local MouseSystem = secsi.system{'isMouse'}

@@ -7,12 +7,11 @@ local Cat = secsi.entity{
 }
 
 local names = {
-    'Little Booty Ham Sandwich',
+    'Ham Sandwich',
     'Dog The Cat',
     'Fifty Shades Of Graham',
     'Isaac Mewton',
     'Jabba The Butt',
-    'Ninja Killer Nine Thousand',
     'Obi Wan Catnobi',
     'The Great Catsby',
     'Whiskerus Maximus',
@@ -20,11 +19,9 @@ local names = {
     'Amazes Me Penelope',
     'Bowie Spartacus',
     'Chicken Pants',
-    'Cisco Allen Mcflashkitty',
     'Count Wigglybutt',
     'Disco Cheetah',
     'Draco Meowfoy',
-    'Dutchess Mouse Mcmittens',
     'Foxy Spreadsheets',
     'Humphrey Bojangles',
     'Jonathan Supersocks',
@@ -32,9 +29,8 @@ local names = {
     'Monochromaticat',
     'Motley Crouton',
     'Mrs. Meowgi',
-    'Newton Reginald Schibbelhut',
     'Old Man Hands',
-    'Pepper Blue Hotsauce Peters',
+    'Blue Hotsauce',
     'Pistachio Buttons',
     'Pocket Change',
     'Princess Fairy Boots',
@@ -48,7 +44,6 @@ local names = {
     'Sugar Britches',
     'Sunny Summersunburst',
     'The Little Muffin Man',
-    'The Princess Sofia Bean The Third Esq',
     'Thumbs Hemingway',
     'Tiny Thursday',
     'Tom Brady The Cat',
@@ -87,17 +82,22 @@ local notes = {
 }
 
 local allergies = {
+    'blue', 'red', 'yellow',
+    'greem', 'orange', 'purple'
 }
 local symptoms = {
 }
 
 local ww, wh = love.graphics.getDimensions()
 local lastCat = 1
-local nCats = 4
+local nCats = 9
 function Cat:init()
     local n = math.random(1, nCats)
-    if n == lastCat then n = (n+1)%4 end
+    while n == lastCat do
+        n = math.random(1, nCats)
+    end
     lastCat = n
+
     self.image = love.graphics.newImage('assets/cats/cat'..n..'.png')
     self.eyelids = love.graphics.newImage('assets/cats/eyes'..n..'.png')
     self.height = wh - 100
@@ -105,14 +105,23 @@ function Cat:init()
     self.x = ww/2
     self.y = wh/2
     self.eyesClosed = true
-    self.heartrate = 65 + math.random(1, 15)
+    self.heartrate = 70 + math.random(1, 15)
+    self.maxHeartRate = 200 + math.random(1, 15)
+
     self.tweens = {}
 
     self.name = names[math.random(1,#names)]
     self.symptoms = "Cough, Fever, Eye Boogies"
-    self.allergies = {
-        green = true
-    }
+
+    local ra = math.random(1, #allergies)
+    local ra2 = math.random(1, #allergies)
+    while ra2 == ra do
+        ra2 = math.random(1, #allergies)
+    end
+    self.allergies = {}
+    self.allergies[allergies[ra]] = true
+    self.allergies[allergies[ra2]] = true
+
     self.notes = notes[math.random(1,#notes)]
 
     local month = math.random(1,12)

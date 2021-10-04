@@ -18,6 +18,7 @@ require 'systems.NewPatientSystem'
 require 'systems.BookSystem'
 require 'systems.DispenseSystem'
 require 'systems.DiseaseSystem'
+require 'systems.HeartRateSystem'
 
 -- music: https://www.strofe.com/
 -- sound fx: 

@@ -55,6 +55,10 @@ function TweenManagementSystem.update(e, dt)
         elseif type == 'quadOut' then
             t = t/d
             i = -c * t * (t-2) + b
+        elseif type == 'cubicOut' then
+            t = t/d
+            t = t-1
+            i = c*(t*t*t+1)+b
         end
 
         if not tween.wait then

@@ -20,15 +20,22 @@ function RenderSystem.update(e)
     end
 
     love.graphics.setColor(1, 1, 1)
-    if e.alpha then
-        love.graphics.setColor(1, 1, 1, e.alpha)
+    if e.alpha and e.color then
+        love.graphics.setColor(e.color[1], e.color[2], e.color[3], e.alpha)
     end
     local sw = 1
     local sh = 1
     if e.image == 'rect' then
-        love.graphics.rectangle(
-            'fill', e.x - e.width/2, e.y-e.height/2, e.width, e.height
-        )
+        if e.icon then
+            love.graphics.rectangle(
+                'fill', e.x - e.width/2 + e.iconWidth/2, e.y-e.height*2/6, e.width, e.height*2/3, 
+                25, 25
+            )
+        else
+            love.graphics.rectangle(
+                'fill', e.x - e.width/2, e.y-e.height/2, e.width, e.height
+            )
+        end
     elseif not e.isMonitor then
         local iw = e.image:getWidth()
         local ih = e.image:getHeight()
@@ -123,7 +130,7 @@ function RenderSystem.update(e)
 
         ---[[
         -- INFO
-        local p = Game.currentPatient
+        local p = e.patient
         love.graphics.setFont(smallf)
         -- Name
         love.graphics.printf(
@@ -141,9 +148,13 @@ function RenderSystem.update(e)
             '                  '..p.symptoms, x, y + line*2.25 + fo, e.textWidth, 'left'
         )
         -- Allergies
-        --[[
+        ---[[
+        local allergyString = ''
+        for k in pairs(p.allergies) do
+            allergyString = allergyString..k..', '
+        end
         love.graphics.printf(
-            '                   '..p.allergies, x, y + line*4.25 +fo, e.textWidth, 'left'
+            '                   '..allergyString, x, y + line*4.25 +fo, e.textWidth, 'left'
         )
         --]]
         love.graphics.setDefaultFilter(dfilter)
@@ -180,7 +191,10 @@ function RenderSystem.update(e)
         love.graphics.setColor(0, 1, 0)
         local px = -90
         local py = 40
-        love.graphics.print('BPM'..Game.currentPatient.heartrate, px, py)
+
+        local hr = math.floor(Game.currentPatient.heartrate)
+
+        love.graphics.print('BPM'..hr, px, py)
         love.graphics.print('PL'..Game.lives, px + 140, py)
         love.graphics.pop()
     end
@@ -192,9 +206,9 @@ function RenderSystem.update(e)
         local p2 = e.pages[e.onPage + 1]
 
         local pf = love.graphics.newFont('assets/fonts/Montserrat-Bold.ttf', 26)
-        local pfs = love.graphics.newFont('assets/fonts/PlayfairDisplay-Regular.ttf', 18)
-        local pfsb = love.graphics.newFont('assets/fonts/PlayfairDisplay-Bold.ttf', 18)
-        local pnf = love.graphics.newFont('assets/fonts/Montserrat-Bold.ttf', 20)
+        local pfs = love.graphics.newFont('assets/fonts/PlayfairDisplay-Regular.ttf', 14)
+        local pfsb = love.graphics.newFont('assets/fonts/PlayfairDisplay-Bold.ttf', 14)
+        local pnf = love.graphics.newFont('assets/fonts/PlayfairDisplay-Bold.ttf', 20)
         local lh = pfs:getHeight()
 
         love.graphics.setColor{0, 0, 0}
@@ -223,29 +237,36 @@ function RenderSystem.update(e)
         local p1y = n1y + pf:getHeight()*1.5
         love.graphics.printf('                             '..p1.symptoms, p1x, p1y, pw1, 'left')
         local ph = lh*2
-        local steph = lh*2.25
+        local steph = lh*4
         local stuffy = lh + ph + 30
 
+        local lineh = pfs:getHeight()
+        local step1l = math.ceil(pfs:getWidth('                 '..p1.step1)/pw1)+1
+        local step2l = math.ceil(pfs:getWidth('                 '..p1.step2)/pw1)+1
         love.graphics.printf('                 '..p1.step1, p1x, p1y + stuffy, pw1, 'left')
-        love.graphics.printf('                 '..p1.step2, p1x, p1y + stuffy + steph, pw1, 'left')
-        love.graphics.printf('                 '..p2.step2, p1x, p1y + stuffy + steph*2, pw1, 'left')
+        love.graphics.printf('                 '..p1.step2, p1x, p1y + stuffy + step1l*lineh, pw1, 'left')
+        love.graphics.printf('                 '..p1.step3, p1x, p1y + stuffy + (step2l+step1l)*lineh, pw1, 'left')
 
         -- Right page
         local p2x = n2x
         local p2y = n2y + pf:getHeight()*1.5
-        love.graphics.printf('                             '..p2.symptoms, p2x, p2y, pw2, 'left')
+        local step1l2 = math.ceil(pfs:getWidth('                 '..p2.step1)/pw2)+1
+        local step2l2 = math.ceil(pfs:getWidth('                 '..p2.step2)/pw2)+1
+        love.graphics.printf('                 '..p2.step1, p2x, p2y + stuffy, pw2, 'left')
+        love.graphics.printf('                 '..p2.step2, p2x, p2y + stuffy + step1l2*lineh, pw2, 'left')
+        love.graphics.printf('                 '..p2.step3, p2x, p2y + stuffy + (step2l2+step1l2)*lineh, pw2, 'left')
         
         love.graphics.setFont(pfsb)
         love.graphics.printf('SYMPTOMS: ', p1x, p1y, pw1, 'left')
         love.graphics.printf('PROCEDURE', p1x, p1y + lh + ph - 5, pw1, 'center')
         love.graphics.printf('STEP 1: ', p1x, p1y + stuffy, pw1, 'left')
-        love.graphics.printf('STEP 2: ', p1x, p1y + stuffy + steph, pw1, 'left')
-        love.graphics.printf('STEP 3: ', p1x, p1y + stuffy + steph*2, pw1, 'left')
+        love.graphics.printf('STEP 2: ', p1x, p1y + stuffy + step1l*lineh, pw1, 'left')
+        love.graphics.printf('STEP 3: ', p1x, p1y + stuffy + (step2l+step1l)*lineh, pw1, 'left')
         love.graphics.printf('SYMPTOMS: ', p2x, p2y, pw2, 'left')
         love.graphics.printf('PROCEDURE', p2x, p2y + lh + ph - 5, pw2, 'center')
-        love.graphics.printf('STEP 1: ', p2x, p1y + stuffy, pw1, 'left')
-        love.graphics.printf('STEP 2: ', p2x, p1y + stuffy + steph, pw1, 'left')
-        love.graphics.printf('STEP 3: ', p2x, p1y + stuffy + steph*2, pw1, 'left')
+        love.graphics.printf('STEP 1: ', p2x, p1y + stuffy, pw2, 'left')
+        love.graphics.printf('STEP 2: ', p2x, p1y + stuffy + step1l2*lineh, pw2, 'left')
+        love.graphics.printf('STEP 3: ', p2x, p1y + stuffy + (step2l2+step1l2)*lineh, pw2, 'left')
 
         love.graphics.setDefaultFilter(dfilter)
     end

@@ -42,7 +42,13 @@ function DiseaseSystem.update(e)
             end
         end
         if e.phase == 3 then
-            e.cured = true
+            if not e.pattable then
+                e.pattable = true
+                e.bellyPatCount = 0
+            end
+            if e.bellyPatCount == 3 then
+                e.cured = true
+            end
         end
     end
 

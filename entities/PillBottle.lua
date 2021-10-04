@@ -40,12 +40,15 @@ function PillBottle:init()
     self.x = ww + self.width/2 - self.iconWidth
     self.y = self.iconHeight/2 + 15
     self.hover = true
-    self.hoverTo = { x = self.x - self.width, y = self.y}
+    self.hoverTo = { x = self.x - self.width + self.iconWidth, y = self.y}
     self.hoverOff= { x = self.x, y = self.y}
 
+    self.hoverToSound = love.audio.newSource('assets/sounds/pillopen.wav', 'static')
+    self.hoverOffSound = love.audio.newSource('assets/sounds/pillclose.wav', 'static')
     --self.icon = false
     
-    self.alpha = 0
+    self.alpha = 0.75
+    self.color = {218/255, 103/255, 0}
 end
 
 return PillBottle

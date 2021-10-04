@@ -4,7 +4,7 @@ local Book = secsi.entity{
     openImage = love.graphics.newImage('assets/book.png'),
     closedImage = love.graphics.newImage('assets/closedbook.png'),
     render = true,
-    layer = 3,
+    layer = 4,
     pressable = true,
 }
 
@@ -28,9 +28,10 @@ function Book:init(x, y)
     local p1 = {
         name = 'Tutorialitis',
         symptoms = 'Cough, Fever, Eye Boogies',
-        step1 = 'Do the first thing',
-        step2 = 'Then you have to do the second thing',
-        step3 = 'Don\'t forget the last thing!',
+        step1 = 'Give patient two pills',
+        step2 = 'If the first two pills had a matching color give another pill'..
+        ' without that color, else give patient a purple pill',
+        step3 = 'Administer three pats to the belly',
     }
 
     local p2 = {

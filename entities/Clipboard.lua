@@ -23,7 +23,6 @@ function Clipboard:init(x, y)
     self.hover = true
     self.hoverTo = { x = self.x, y = wh - self.height/2}
     self.hoverOff= { x = self.x, y = self.y}
-
     self.tweens = {}
 
 end
