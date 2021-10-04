@@ -14,10 +14,21 @@ local PatientSystem = secsi.system{'isPatient'}
 
 function PatientSystem.update(e, dt)
 
+    if e.eatPill then
+        local p = e.eatPill
+        if e.allergies[p.color1] or e.allergies[p.color2] then
+            e.heartrate = e.heartrate + 10
+        end
+        table.insert(e.pillsTaken, p)
+        e.eatPill = nil
+    end
+
     if cureButton.pressed and not e.cured then
         e.cured = true
+    end
+
+    if e.cured and not (e.wakeUp or e.leave or e.happyDance) then
         e.wakeUp = true
-        e.cureButtond = true
         e.blinking = true
     end
 

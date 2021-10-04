@@ -32,6 +32,7 @@ function DragSystem.update(e)
 
     if e.pressed then
         e.dragging = true
+        e.layer = 9
     end
 
     if e.dragging then
@@ -41,9 +42,26 @@ function DragSystem.update(e)
 
     if e.dragging and not love.mouse.isDown(1) then
         e.dragging = false
+        e.layer = 2
     end
 end
 
+local function onTop(a, b)
+    return a.x > b.x - b.width/2 and a.x < b.x + b.width/2
+    and a.y > b.y - b.height/2 and a.y < b.y + b.height/2
+end
+
+local DropSystem = secsi.system{
+    any = {'edible'}
+}
+function DropSystem.update(e)
+    if e.edible and e.outOfDispenser and not e.dragging then
+        if onTop(e, Game.currentPatient) then
+            Game.currentPatient.eatPill = e
+            e:remove()
+        end
+    end
+end
 
 local MouseSystem = secsi.system{'isMouse'}
 function MouseSystem.update(e)

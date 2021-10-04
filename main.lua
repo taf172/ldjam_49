@@ -1,6 +1,6 @@
 local ww, wh = 960, 720
 love.window.setMode(ww, wh)
-love.graphics.setDefaultFilter("nearest","nearest")
+--love.graphics.setDefaultFilter("nearest","nearest")
 love.mouse.setVisible(false)
 
 local secsi = require 'secsi'
@@ -16,6 +16,8 @@ require 'systems.AnimationSystem'
 require 'systems.ParticleSystem'
 require 'systems.NewPatientSystem'
 require 'systems.BookSystem'
+require 'systems.DispenseSystem'
+require 'systems.DiseaseSystem'
 
 -- music: https://www.strofe.com/
 -- sound fx: 

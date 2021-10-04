@@ -1,27 +1,40 @@
 local secsi = require 'secsi'
 
+
 local Pill = secsi.entity{
     render = true,
-    hudItem = true,
     pressable = true,
     draggable = true,
-    onCamera = true,
-    image = 'rect',
+    edible = true
 }
 
-function Pill:init()
+function Pill:init(c1, c2)
     local ww, wh = love.graphics.getDimensions()
     self.layer = 3
-    self.isDown = false
     self.x = ww - 100
     self.y = wh/3
-    self.width = 200
-    self.height = 100
-    self.color = {0.9, 0.9, 0.9}
-    self.text = 'Pill'
-    self.textColor = {0.2, 0.9, 0.2}
-    self.textCenter = true
-    self.draggable = true
+
+    self.image = love.graphics.newImage('assets/pills/'..c1..c2..'pill.png')
+    self.height = 50
+    self.width = self.image:getWidth()*(self.height/self.image:getHeight())
+
+    ---[[
+        if c1 == 'b' then
+            self.color1 = 'blue'
+        elseif c1 == 'r' then
+            self.color1 = 'red'
+        elseif c1 == 'y' then
+            self.color1 = 'yellow'
+        end
+
+        if c2 == 'o' then
+            self.color2 = 'orange'
+        elseif c2 == 'g' then
+            self.color2 = 'green'
+        elseif c2 == 'p' then
+            self.color2 = 'purple'
+        end
+        --]]
 end
 
 return Pill

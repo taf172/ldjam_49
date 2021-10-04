@@ -3,7 +3,7 @@ local secsi = require 'secsi'
 local Bed = secsi.entity{
     image = love.graphics.newImage('assets/bed.png'),
     render = true,
-    layer = 1
+    layer = -1
 }
 
 local ww, wh = love.graphics.getDimensions()

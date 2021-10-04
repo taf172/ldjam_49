@@ -5,6 +5,7 @@ local Monitor = require 'entities.monitor'
 local Arm = require 'entities.arm'
 local Book = require 'entities.book'
 local Pill = require 'entities.pill'
+local PillBottle = require 'entities.pillbottle'
 
 local ww, wh = love.graphics.getDimensions()
 
@@ -15,6 +16,7 @@ Game.clipboard = Clipboard()
 Game.monitor = Monitor()
 Game.arm = Arm()
 Game.book = Book()
-Game.pill = Pill()
+Game.pillbottle = PillBottle()
+Game.lives = 3
 
 return Game
