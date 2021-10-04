@@ -1,5 +1,5 @@
 local secsi = require 'secsi'
-local Game = require 'entities.game'
+local Game = require 'entities.Game'
 
 local RenderSystem = secsi.system{ 'x', 'y', 'image', 'layer', 'render'}
 RenderSystem.group = 'draw'
@@ -33,7 +33,7 @@ function RenderSystem.update(e)
             )
         else
             love.graphics.rectangle(
-                'fill', e.x - e.width/2, e.y-e.height/2, e.width, e.height
+                'fill', e.x - e.width/2, e.y-e.height/2, e.width, e.height, 5, 5
             )
         end
     elseif not e.isMonitor then
@@ -205,7 +205,7 @@ function RenderSystem.update(e)
         local p1 = e.pages[e.onPage]
         local p2 = e.pages[e.onPage + 1]
 
-        local pf = love.graphics.newFont('assets/fonts/Montserrat-Bold.ttf', 26)
+        local pf = love.graphics.newFont('assets/fonts/Montserrat-Bold.ttf', 20)
         local pfs = love.graphics.newFont('assets/fonts/PlayfairDisplay-Regular.ttf', 14)
         local pfsb = love.graphics.newFont('assets/fonts/PlayfairDisplay-Bold.ttf', 14)
         local pnf = love.graphics.newFont('assets/fonts/PlayfairDisplay-Bold.ttf', 20)
@@ -250,6 +250,7 @@ function RenderSystem.update(e)
         -- Right page
         local p2x = n2x
         local p2y = n2y + pf:getHeight()*1.5
+        love.graphics.printf('                             '..p2.symptoms, p2x, p2y, pw2, 'left')
         local step1l2 = math.ceil(pfs:getWidth('                 '..p2.step1)/pw2)+1
         local step2l2 = math.ceil(pfs:getWidth('                 '..p2.step2)/pw2)+1
         love.graphics.printf('                 '..p2.step1, p2x, p2y + stuffy, pw2, 'left')

@@ -1,17 +1,36 @@
 local secsi = require 'secsi'
-local Emitter = require 'entities.emitter'
+local Emitter = require 'entities.Emitter'
 
 local AnimationSystem = secsi.system{
     all = {'tweens'},
     any = {
         'float', 'blinking', 'leaving',
         'bounce', 'hop', 'happyDance',
-        'walkAway'
+        'walkAway', 'fling', 'shake'
     }
 }
 
 local ww, wh = love.graphics.getDimensions()
 function AnimationSystem.update(e, dt)
+    if e.shake then
+        if not e.shakeTimer then
+            e.shakeTimer = 0
+            e.shakeStartX = e.x
+            e.shakeStartY = e.y
+        elseif e.shakeTimer > 0.5 then
+            e.x = e.shakeStartX
+            e.y = e.shakeStartY
+            e.shakeTimer = nil
+            e.shakeStartX = nil
+            e.shakeStartY = nil
+            e.shake = false
+        else
+            e.shakeTimer = e.shakeTimer + dt
+            e.x = e.shakeStartX + math.random(-5, 5)
+            e.y = e.shakeStartY + math.random(-5, 5)
+        end
+    end
+
     if e.float then
         e.tweens.y = {-e.height/2, e.lifetime, 'linear'}
         e.float = false
@@ -96,6 +115,11 @@ function AnimationSystem.update(e, dt)
 
         -- e.walkAway = false
         -- e.flip = not e.flip
+    end
+
+    if e.fling then
+        e.tweens.x = {-e.width/2, 3, 'quadIn'}
+        e.fling = false
     end
 
     --[[

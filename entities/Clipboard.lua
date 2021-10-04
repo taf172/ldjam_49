@@ -13,7 +13,6 @@ function Clipboard:init(x, y)
     self.width = self.image:getWidth()*(self.height/self.image:getHeight())
     self.x = 25 + self.width/2
     self.y = wh + self.height/8
-    self.scale = 1/2
 
     self.textColor = {0.1, 0.1, 0.1}
     self.textWidth =  self.width*0.76

@@ -8,6 +8,35 @@ local Book = secsi.entity{
     pressable = true,
 }
 
+local diseases = {
+    'Delirious Rash',
+    'Brain Acne',
+    'Stinging Tetanus',
+    'Explosive Anxiety',
+    'Incurable Sneeze',
+    'Rickety Eye',
+    'Orange Leprosy',
+    'Incurable Nose',
+    'Pig Spasms',
+    'Dreaming Feet',
+}
+
+local symtpoms = {
+    'Restlessness',
+    'Scoliosis',
+    'Coughing',
+    'Sneezing',
+    'Runny Nose',
+    'Itchy Fur',
+    'Tail Curl',
+    'Quiet Meow',
+    'Enlarged Knees',
+    'Loss of Taste',
+    'Male-Pattern Whisker Loss',
+    'Uncontrollable Running',
+    'Paw Rash',
+}
+
 local ww, wh = love.graphics.getDimensions()
 function Book:init(x, y)
     self.image = self.closedImage
@@ -35,31 +64,33 @@ function Book:init(x, y)
     }
 
     local p2 = {
-        name = 'Exampleitis',
-        symptoms = 'These, are, other, symptoms',
-        step1 = 'This first step is different then the other',
-        step2 = 'It has extra text so i can see how the looks for this',
-        step3 = 'Also thats it',
+        name = 'Overscope Syndrom',
+        symptoms = 'Lack of sleep, frantic coding',
+        step1 = 'I wasn\'t able to finish in time',
+        step2 = 'The idea was to have more diseases with complex procedures'..
+        ' as well as more items to interact with',
+        step3 = 'Hope you enjoyed it anyways!',
     }
 
-    local p3 = {
-        name = 'Omg its a thing',
-        symptoms = 'asdasd, asd, erh dgasd',
-        step1 = 'asdfas dfasdf asdfasdfas dfasdf',
-        step2 = 'ddfsdfs fdsfsd fsdfsdfs dfsdfs',
-        step3 = 'ddddd dddddddd dddd',
-    }
-
-    local p4 = {
-        name = 'More tests',
-        symptoms = 'These, are, different, symptoms, from, the, last, one',
-        step1 = 'This game is an absolute trainwreck',
-        step2 = 'Here is some random text',
-        step3 = 'Please end me',
-    }
-
-    self.pages = {p1, p2, p3, p4}
+    self.pages = {p1, p2}
     self.onPage = 1
+
+    for i=1, #diseases do
+        local r1 = math.random(1, #symtpoms)
+        local r2 = math.random(1, #symtpoms)
+        while r2 == r1 do
+            r2 = math.random(1, #symtpoms)
+        end
+
+        local page = {
+            name = diseases[i],
+            symptoms = symtpoms[r1]..', '..symtpoms[r2],
+            step1 = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ullamcorper luctus malesuada.',
+            step2 = 'Sed pharetra ac tortor in bibendum.',
+            step3 = 'Vestibulum cursus elit ac tellus maximus, et suscipit massa eleifend.'
+        }
+        table.insert(self.pages, page)
+    end
     --[[
     self.text = "this is a clip board!this is" ..
     "this is a clip board!this is" .. "this is a clip board!this is" ..

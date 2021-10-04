@@ -1,11 +1,11 @@
-local Bed = require 'entities.bed'
-local Cat = require 'entities.cat'
-local Clipboard = require 'entities.clipboard'
-local Monitor = require 'entities.monitor'
-local Arm = require 'entities.arm'
-local Book = require 'entities.book'
-local Pill = require 'entities.pill'
-local PillBottle = require 'entities.pillbottle'
+local Bed = require 'entities.Bed'
+local Cat = require 'entities.Cat'
+local Clipboard = require 'entities.Clipboard'
+local Monitor = require 'entities.Monitor'
+local Arm = require 'entities.Arm'
+local Book = require 'entities.Book'
+local Pill = require 'entities.Pill'
+local PillBottle = require 'entities.PillBottle'
 
 local ww, wh = love.graphics.getDimensions()
 
@@ -17,6 +17,7 @@ Game.arm = Arm()
 Game.book = Book()
 Game.pillbottle = PillBottle()
 Game.lives = 3
+Game.title = true
 
 local b = Bed()
 b.x = ww + b.width/2

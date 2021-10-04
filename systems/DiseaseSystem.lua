@@ -1,5 +1,5 @@
 local secsi = require 'secsi'
-local Game = require 'entities.game'
+local Game = require 'entities.Game'
 
 local DiseaseSystem = secsi.system{'isPatient'}
 

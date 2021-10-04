@@ -1,5 +1,5 @@
 local secsi = require 'secsi'
-local Heart = require 'entities.heart'
+local Heart = require 'entities.Heart'
 
 local LifetimeSystem = secsi.system{'timer', 'lifetime'}
 function LifetimeSystem.update(e, dt)

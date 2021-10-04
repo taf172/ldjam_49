@@ -1,5 +1,5 @@
 local secsi = require 'secsi'
-local Game = require 'entities.game'
+local Game = require 'entities.Game'
 
 local beep = love.audio.newSource('assets/sounds/beep.wav', 'static')
 beep:setVolume(0.25)
@@ -10,10 +10,11 @@ flatline:setVolume(0.2)
 
 local pulseTime = 1
 local timer = 0
-local increaseRate = 0.5
+local increaseRate = 2
 local HeartRateSystem = secsi.system{'heartrate', 'maxHeartRate'}
 function HeartRateSystem.update(e, dt)
     if not e.dead then
+        flatline:stop()
         timer = timer + dt
         if timer > pulseTime then
             beep:play()

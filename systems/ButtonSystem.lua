@@ -1,5 +1,5 @@
 local secsi = require 'secsi'
-local Game = require 'entities.game'
+local Game = require 'entities.Game'
 
 local ButtonSystem = secsi.system{
     'pressable',
@@ -62,7 +62,8 @@ function DropSystem.update(e)
         if onTop(e, Game.currentPatient) then
             gulpSound:play()
             Game.currentPatient.eatPill = e
-            e:remove()
+            e.edible = false
+            e.render = false
         end
     end
 end

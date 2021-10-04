@@ -1,8 +1,8 @@
 local secsi = require 'secsi'
-local Pill = require 'entities.pill'
+local Pill = require 'entities.Pill'
 
 local PillBottle = secsi.entity{
-    icon = love.graphics.newImage('assets/PillBottle.png'),
+    icon = love.graphics.newImage('assets/pillbottle.png'),
     image = 'rect',
     render = true,
     layer = 2,

@@ -1,7 +1,7 @@
 local secsi = require 'secsi'
-local Game = require 'entities.game'
-local Cat = require 'entities.cat'
-local Button = require 'entities.cat'
+local Game = require 'entities.Game'
+local Cat = require 'entities.Cat'
+local Button = require 'entities.Cat'
 
 local spawner = {isSpawner = true}
 secsi.add(spawner)
@@ -20,7 +20,7 @@ local inSound = love.audio.newSource('assets/sounds/bedroll.wav', 'static')
 local rollingOver = false
 local scribbleSound = love.audio.newSource('assets/sounds/scribble.wav', 'static')
 local clipboardUpTimer = 0
-local clipboardUpTime = 3
+local clipboardUpTime = 2
 
 function NewPatientSystem.update(e, dt)
     if Game.currentPatient.gone and not spawnNew then
@@ -35,6 +35,7 @@ function NewPatientSystem.update(e, dt)
         cb.tweens.x = {cb.hoverOff.x, 0.5, 'linear'}
         cb.tweens.y = {cb.hoverOff.y, 0.5, 'linear'}
         cb.hover = false
+
     end
 
     if spawnNew then
@@ -64,7 +65,8 @@ function NewPatientSystem.update(e, dt)
         inSound:play()
     end
 
-    if rollingOver and Game.currentPatient.x == ww/2 then
+    if rollingOver and Game.currentPatient.x <= ww/2 + 1 then
+        Game.pillbottle.reset = true
         local cb = Game.clipboard
         scribbleSound:play()
         cb.patient = Game.currentPatient
@@ -79,6 +81,7 @@ function NewPatientSystem.update(e, dt)
             local cb = Game.clipboard
             cb.hoveringTo = true
             cb.hover = true
+            clipboardUpTimer = 0
         end
     end
 end

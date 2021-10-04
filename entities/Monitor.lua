@@ -32,6 +32,8 @@ function Monitor:init()
     self.animation = anim8.newAnimation(blipg('1-5', '1-14'), blipdur)
     self.hearticon = love.graphics.newImage('assets/hearticon.png')
     self.heartrate = 75
+
+    self.tweens = {}
 end
 
 return Monitor

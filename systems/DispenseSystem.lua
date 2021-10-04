@@ -3,7 +3,15 @@ local secsi = require 'secsi'
 local DisepnseSystem = secsi.system{'items', 'dispenser'}
 
 function DisepnseSystem.update(e)
-
+    if e.reset then
+        for i=1, #e.items do
+            e.items[i].edible = true
+            e.items[i].render = true
+            e.items[i].outOfDispenser = false
+            e.items[i].layer = e.layer + 1
+        end
+        e.reset = false
+    end
     if e.dispenseHorizontal then
         for i=1, #e.items do
             local item = e.items[i]

@@ -18,6 +18,7 @@ function Pill:init(c1, c2)
     self.height = 50
     self.width = self.image:getWidth()*(self.height/self.image:getHeight())
 
+    self.tweens = {}
     ---[[
         if c1 == 'b' then
             self.color1 = 'blue'
